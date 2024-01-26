@@ -47,9 +47,11 @@ local_backend_confs = {
         ),
     ),
 }
-all_backend_confs = (
-        aws_backend_confs | gcp_backends_confs | local_backend_confs
-)
+all_backend_confs = {
+    **aws_backend_confs,
+    **gcp_backends_confs,
+    **local_backend_confs
+}
 
 make_test_aws_backends = test_many(**aws_backend_confs)
 make_test_gcp_backends = test_many(**gcp_backends_confs)
