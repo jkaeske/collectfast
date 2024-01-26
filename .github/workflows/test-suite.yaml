@@ -66,8 +66,8 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: coverage
-      - env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        run: |
-          ./cc-test-reporter sum-coverage --output - coverage/coverage-*.json \
-            | ./cc-test-reporter upload-coverage --debug --input -
+#      - env:
+#          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+#        run: |
+#          ./cc-test-reporter sum-coverage --output - coverage/coverage-*.json \
+#            | ./cc-test-reporter upload-coverage --debug --input -
