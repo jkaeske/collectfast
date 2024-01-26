@@ -125,6 +125,7 @@ def test_basics_local(case: TestCase) -> None:
 
 @make_test_aws_backends
 @override_setting("threads", 5)
+@mock_s3
 def test_threads_aws(case: TestCase) -> None:
     conn = boto3.resource('s3', region_name='us-east-1')
     # Create bucket
@@ -212,6 +213,7 @@ def test_raises_for_no_configured_strategy(case: TestCase) -> None:
 
 @make_test_aws_backends
 @mock.patch("collectfast.strategies.base.Strategy.post_copy_hook", autospec=True)
+@mock_s3
 def test_calls_post_copy_hook_aws(_case: TestCase,
                                   post_copy_hook: mock.MagicMock) -> None:
     conn = boto3.resource('s3', region_name='us-east-1')
