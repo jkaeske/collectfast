@@ -11,7 +11,6 @@ from django.conf import settings
 from collectfast.management.commands.collectstatic import Command
 from collectfast.tests.utils import clean_static_dir
 from collectfast.tests.utils import create_static_file
-from collectfast.tests.utils import live_test
 from collectfast.tests.utils import make_test
 from collectfast.tests.utils import override_setting
 from collectfast.tests.utils import override_storage_attr
