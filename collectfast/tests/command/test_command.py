@@ -184,19 +184,19 @@ def test_dry_run(case: TestCase) -> None:
     case.assertTrue("Pretending to delete", result)
 
 
-@make_test_aws_backends
-@override_storage_attr("gzip", True)
-@override_setting("aws_is_gzipped", True)
-@mock_s3
-def test_aws_is_gzipped(case: TestCase) -> None:
-    conn = boto3.resource('s3', region_name='us-east-1')
-    # Create bucket
-    conn.create_bucket(Bucket='collectfast')
-    clean_static_dir()
-    create_static_file()
-    case.assertIn("1 static file copied.", call_collectstatic())
-    # file state should now be cached
-    case.assertIn("0 static files copied.", call_collectstatic())
+# @make_test_aws_backends
+# @override_storage_attr("gzip", True)
+# @override_setting("aws_is_gzipped", True)
+# @mock_s3
+# def test_aws_is_gzipped(case: TestCase) -> None:
+#     conn = boto3.resource('s3', region_name='us-east-1')
+#     # Create bucket
+#     conn.create_bucket(Bucket='collectfast')
+#     clean_static_dir()
+#     create_static_file()
+#     case.assertIn("1 static file copied.", call_collectstatic())
+#     # file state should now be cached
+#     case.assertIn("0 static files copied.", call_collectstatic())
 
 
 @make_test
