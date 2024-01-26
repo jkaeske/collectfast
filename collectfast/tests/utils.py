@@ -17,9 +17,6 @@ from typing_extensions import Final
 
 from collectfast import settings
 
-live_test = pytest.mark.skipif(
-    os.environ.get("SKIP_LIVE_TESTS") == "true", reason="not running live tests"
-)
 
 static_dir: Final = pathlib.Path(django_settings.STATICFILES_DIRS[0])
 
