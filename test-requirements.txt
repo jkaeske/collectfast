@@ -7,3 +7,4 @@ google-cloud-storage
 pytest
 pytest-django
 moto
+tox
