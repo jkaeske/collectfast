@@ -98,13 +98,28 @@ def override_storage_attr(name: str, value: Any) -> Callable[[F], F]:
     def decorator(fn: F) -> F:
         @functools.wraps(fn)
         def wrapper(*args, **kwargs):
-            storage = import_string(django_settings.STATICFILES_STORAGE)
-            original = getattr(storage, name)
-            setattr(storage, name, value)
+            storage_backend = django_settings.STATICFILES_STORAGE
+            storage = import_string(storage_backend)
+            if hasattr(storage, name):
+                # If the attribute is a direct attribute of the storage backend class
+                original = getattr(storage, name)
+                setattr(storage, name, value)
+            else:
+                # If the attribute is an option within the OPTIONS dictionary
+                if 'OPTIONS' not in django_settings.STORAGES['staticfiles']:
+                    django_settings.STORAGES['staticfiles']['OPTIONS'] = {}
+                original = django_settings.STORAGES['staticfiles']['OPTIONS'].get(name)
+                django_settings.STORAGES['staticfiles']['OPTIONS'][name] = value
             try:
                 return fn(*args, **kwargs)
             finally:
-                setattr(storage, name, original)
+                if hasattr(storage, name):
+                    setattr(storage, name, original)
+                else:
+                    if original is not None:
+                        django_settings.STORAGES['staticfiles']['OPTIONS'][name] = original
+                    else:
+                        del django_settings.STORAGES['staticfiles']['OPTIONS'][name]
 
         return cast(F, wrapper)
 
