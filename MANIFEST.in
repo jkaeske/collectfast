@@ -1,5 +1,6 @@
 include README.md
 include LICENSE
+include tox.ini
 include collectfast/py.typed
 exclude conftest.py
 exclude collectfast/tests/

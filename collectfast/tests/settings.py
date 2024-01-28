@@ -1,6 +1,4 @@
-import os
 import pathlib
-import tempfile
 
 # from google.oauth2 import service_account
 
@@ -58,3 +56,10 @@ AWS_S3_HOST = "s3.eu-central-1.amazonaws.com"
 #             file.name
 #         )
 # GS_BUCKET_NAME = "roasted-dufus"
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "mydatabase",
+    }
+}

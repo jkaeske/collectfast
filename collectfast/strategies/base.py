@@ -106,7 +106,7 @@ class HashStrategy(Strategy[_RemoteStorage], abc.ABC):
 
     @abc.abstractmethod
     def get_remote_file_hash(self, prefixed_path: str) -> Optional[str]:
-        ...
+        pass
 
 
 class CachingHashStrategy(HashStrategy[_RemoteStorage], abc.ABC):

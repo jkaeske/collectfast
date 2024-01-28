@@ -37,7 +37,7 @@ def test_gets_and_invalidates_hash(case: TestCase) -> None:
     expected_hash = "hash"
     mocked = mock.MagicMock(return_value=expected_hash)
     # ignore due to monkey patching
-    strategy.get_remote_file_hash = mocked  # type: ignore[assignment]
+    strategy.get_remote_file_hash = mocked  # type: ignore[method-assign]
 
     # empty cache
     result_hash = strategy.get_cached_remote_file_hash("path", "prefixed_path")

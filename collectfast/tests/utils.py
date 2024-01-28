@@ -10,13 +10,11 @@ from typing import Type
 from typing import TypeVar
 from typing import cast
 
-import pytest
 from django.conf import settings as django_settings
 from django.utils.module_loading import import_string
 from typing_extensions import Final
 
 from collectfast import settings
-
 
 static_dir: Final = pathlib.Path(django_settings.STATICFILES_DIRS[0])
 
@@ -103,10 +101,10 @@ def override_storage_attr(name: str, value: Any) -> Callable[[F], F]:
                 setattr(storage, name, value)
             else:
                 # If the attribute is an option within the OPTIONS dictionary
-                if 'OPTIONS' not in django_settings.STORAGES['staticfiles']:
-                    django_settings.STORAGES['staticfiles']['OPTIONS'] = {}
-                original = django_settings.STORAGES['staticfiles']['OPTIONS'].get(name)
-                django_settings.STORAGES['staticfiles']['OPTIONS'][name] = value
+                if "OPTIONS" not in django_settings.STORAGES["staticfiles"]:
+                    django_settings.STORAGES["staticfiles"]["OPTIONS"] = {}
+                original = django_settings.STORAGES["staticfiles"]["OPTIONS"].get(name)
+                django_settings.STORAGES["staticfiles"]["OPTIONS"][name] = value
             try:
                 return fn(*args, **kwargs)
             finally:
@@ -114,9 +112,11 @@ def override_storage_attr(name: str, value: Any) -> Callable[[F], F]:
                     setattr(storage, name, original)
                 else:
                     if original is not None:
-                        django_settings.STORAGES['staticfiles']['OPTIONS'][name] = original
+                        django_settings.STORAGES["staticfiles"]["OPTIONS"][
+                            name
+                        ] = original
                     else:
-                        del django_settings.STORAGES['staticfiles']['OPTIONS'][name]
+                        del django_settings.STORAGES["staticfiles"]["OPTIONS"][name]
 
         return cast(F, wrapper)
 

@@ -3,13 +3,12 @@ from unittest import mock
 
 import boto3
 from django.test import override_settings as override_django_settings
+from moto import mock_aws
 
 from collectfast.tests.utils import clean_static_dir
 from collectfast.tests.utils import create_static_file
 from collectfast.tests.utils import make_test
 from collectfast.tests.utils import override_setting
-
-from moto import mock_s3
 
 from .utils import call_collectstatic
 
@@ -25,11 +24,11 @@ def test_disable_collectfast_with_default_storage(case: TestCase) -> None:
 
 
 @make_test
-@mock_s3
+@mock_aws
 def test_disable_collectfast(case: TestCase) -> None:
-    conn = boto3.resource('s3', region_name='us-east-1')
+    conn = boto3.resource("s3", region_name="us-east-1")
     # Create bucket
-    conn.create_bucket(Bucket='collectfast')
+    conn.create_bucket(Bucket="collectfast")
 
     clean_static_dir()
     create_static_file()
